@@ -35,7 +35,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(resp.GetName())
+	fmt.Println(resp.GetMessage())
 
 	clientCalculate := pb.NewCalculatorServiceClient(conn)
 
