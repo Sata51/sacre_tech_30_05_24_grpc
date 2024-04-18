@@ -1,7 +1,7 @@
 
 PROTO_ROOT_DIR = /opt/homebrew/Cellar/protobuf/26.1/include
 
-proto: proto_go proto_dart proto_node proto_ruby
+proto: proto_go proto_dart proto_node proto_ruby proto_python
 
 proto_go:
 	@mkdir -p go/gen/service
@@ -20,3 +20,7 @@ proto_node:
 proto_ruby:
 	@mkdir -p ruby/gen
 	@grpc_tools_ruby_protoc --ruby_out=ruby/gen --grpc_out=ruby/gen --proto_path=proto_files proto_files/*.proto
+
+proto_python:
+	@mkdir -p python/gen
+	@python3 -m grpc_tools.protoc -Iproto_files --python_out=python/gen --grpc_python_out=python/gen proto_files/*.proto
