@@ -2,7 +2,7 @@
 PROTO_ROOT_DIR = /opt/homebrew/Cellar/protobuf/26.1/include
 
 
-proto: proto_go proto_dart
+proto: proto_go proto_dart proto_node
 
 
 proto_go:
@@ -15,3 +15,8 @@ proto_go:
 proto_dart:
 	@mkdir -p dart/lib/gen
 	@protoc --dart_out=grpc:dart/lib/gen --proto_path=proto_files proto_files/*.proto
+
+
+proto_node:
+	@mkdir -p node/gen
+	@grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./node/gen/ --grpc_out=grpc_js:./node/gen/ --proto_path=proto_files proto_files/*.proto
