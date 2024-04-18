@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = "gen/service";
+
+package service;
+
+message HelloRequest{
+    string name = 1;
+}
+
+message CalculatorRequest{
+    float a = 1;
+    float b = 2;
+}

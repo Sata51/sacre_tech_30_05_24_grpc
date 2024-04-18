@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "gen/service";
+
+package service;
+
+import "response.proto";
+import "request.proto";
+
+service HelloService {
+    rpc SayHello (HelloRequest) returns (HelloResponse) {}
+}
+
+service CalculatorService{
+    rpc Calculate(CalculatorRequest) returns (CalculatorResponse) {}
+}

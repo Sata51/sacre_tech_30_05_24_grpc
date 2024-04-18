@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "gen/service";
+
+package service;
+
+message HelloResponse{
+    string name = 1;
+}
+
+message CalculatorResponse{
+    float addition = 1;
+    float subtraction = 2;
+    float multiplication = 3;
+    float division = 4;
+}
