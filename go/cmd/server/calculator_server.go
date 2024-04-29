@@ -4,6 +4,7 @@ import (
 	"context"
 
 	pb "github.com/Sata51/sacre_tech_30_05_24_grpc/go/gen/service"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type calcServiceServer struct {
@@ -29,5 +30,9 @@ func (c *calcServiceServer) Calculate(ctx context.Context, req *pb.CalculatorReq
 		Subtraction:    req.A - req.B,
 		Multiplication: req.A * req.B,
 		Division:       float32(divResult),
+		ResponseInfo: &pb.ClientResponseInfo{
+			RequestTime:  req.GetRequestInfo().GetTimestamp(),
+			ResponseTime: timestamppb.Now(),
+		},
 	}, nil
 }

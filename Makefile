@@ -12,6 +12,7 @@ proto_go:
 proto_dart:
 	@mkdir -p dart/lib/gen
 	@protoc --dart_out=grpc:dart/lib/gen --proto_path=proto_files proto_files/*.proto
+	@protoc -I$(PROTO_ROOT_DIR) --dart_out=dart/lib/gen $(PROTO_ROOT_DIR)/google/protobuf/*.proto
 
 proto_node:
 	@mkdir -p node/gen
@@ -24,3 +25,17 @@ proto_ruby:
 proto_python:
 	@mkdir -p python/gen
 	@python3 -m grpc_tools.protoc -Iproto_files --python_out=python/gen --grpc_python_out=python/gen proto_files/*.proto
+
+
+install:
+	@dart pub global activate protoc_plugin
+	@pnpm install -g grpc-tools
+	@gem install grpc grpc-tools
+	@cd python && uv venv && source .venv/bin/activate && uv pip install grpcio grpcio-tools
+
+
+docker_build_dart:
+	@docker build -t st_grpc:dart -f dart.Dockerfile .
+
+docker_run_dart:
+	@docker run -it --rm -p 50051:50051 st_grpc:dart

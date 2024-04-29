@@ -3,11 +3,20 @@ option go_package = "gen/service";
 
 package service;
 
+import "google/protobuf/timestamp.proto";
+
+
+message ClientRequestInfo{
+    google.protobuf.Timestamp timestamp = 1;
+}
+
 message HelloRequest{
     string name = 1;
+    ClientRequestInfo request_info = 2;
 }
 
 message CalculatorRequest{
     float a = 1;
     float b = 2;
+    ClientRequestInfo request_info = 3;
 }

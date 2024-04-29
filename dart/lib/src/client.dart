@@ -1,3 +1,4 @@
+import 'package:dart/gen/google/protobuf/timestamp.pb.dart';
 import 'package:dart/gen/request.pb.dart';
 import 'package:dart/gen/service.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
@@ -27,19 +28,32 @@ class Client {
   }
 
   Future<void> _sayHello(String name) async {
-    final request = HelloRequest()..name = name;
+    final info = ClientRequestInfo()
+      ..timestamp = Timestamp.fromDateTime(DateTime.now());
+    final request = HelloRequest()
+      ..name = name
+      ..requestInfo = info;
     final response = await _helloServiceClient.sayHello(request);
+
     print(response.message);
+    print(
+        'Elapsed time: ${response.responseInfo.responseTime.toDateTime().millisecondsSinceEpoch - response.responseInfo.requestTime.toDateTime().millisecondsSinceEpoch}ms');
   }
 
   Future<void> _calculate(double a, double b) async {
+    final info = ClientRequestInfo()
+      ..timestamp = Timestamp.fromDateTime(DateTime.now());
     final request = CalculatorRequest()
       ..a = a
-      ..b = b;
+      ..b = b
+      ..requestInfo = info;
     final response = await _calculatorServiceClient.calculate(request);
     print("Addition: ${response.addition}");
     print("Subtraction: ${response.subtraction}");
     print("Multiplication: ${response.multiplication}");
     print("Division: ${response.division}");
+
+    print(
+        'Elapsed time: ${response.responseInfo.responseTime.toDateTime().millisecondsSinceEpoch - response.responseInfo.requestTime.toDateTime().millisecondsSinceEpoch}ms');
   }
 }
