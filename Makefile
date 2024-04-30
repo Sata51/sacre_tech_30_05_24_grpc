@@ -31,6 +31,7 @@ install:
 	@dart pub global activate protoc_plugin
 	@pnpm install -g grpc-tools
 	@gem install grpc grpc-tools
+	@python3 -m pip install --user grpcio-tools
 	@cd python && uv venv && source .venv/bin/activate && uv pip install grpcio grpcio-tools
 
 

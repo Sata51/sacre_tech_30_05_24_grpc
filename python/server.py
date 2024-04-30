@@ -2,33 +2,62 @@ from concurrent import futures
 import logging
 
 import grpc
-from gen import  response_pb2, service_pb2_grpc
+from gen import response_pb2, service_pb2_grpc
+from google.protobuf.timestamp_pb2 import Timestamp
+from datetime import datetime
 
 
 class HelloService(service_pb2_grpc.HelloServiceServicer):
     def SayHello(self, request, context):
-        return response_pb2.HelloResponse(message='Hello from python, %s!' % request.name)
+        response_time = Timestamp()
+        response_time.FromDatetime(datetime.now())
+        info = response_pb2.ClientResponseInfo(
+            request_time=Timestamp(
+                seconds=request.request_info.timestamp.seconds,
+                nanos=request.request_info.timestamp.nanos,
+            ),
+            response_time=response_time,
+        )
+        return response_pb2.HelloResponse(
+            message=f"Hello from python, {request.name}!",
+            response_info=info,
+        )
+
 
 class CalculatorService(service_pb2_grpc.CalculatorServiceServicer):
     def Calculate(self, request, context):
+        response_time = Timestamp()
+        response_time.FromDatetime(datetime.now())
+
+        info = response_pb2.ClientResponseInfo(
+            request_time=Timestamp(
+                seconds=request.request_info.timestamp.seconds,
+                nanos=request.request_info.timestamp.nanos,
+            ),
+            response_time=response_time,
+        )
         return response_pb2.CalculatorResponse(
             addition=request.a + request.b,
             subtraction=request.a - request.b,
             multiplication=request.a * request.b,
-            division=request.a / request.b if request.b != 0 else 0
-          )
+            division=request.a / request.b if request.b != 0 else 0,
+            response_info=info,
+        )
 
 
 def serve():
     port = 50051
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_HelloServiceServicer_to_server(HelloService(), server)
-    service_pb2_grpc.add_CalculatorServiceServicer_to_server(CalculatorService(), server)
-    server.add_insecure_port('[::]:%s' % port)
+    service_pb2_grpc.add_CalculatorServiceServicer_to_server(
+        CalculatorService(), server
+    )
+    server.add_insecure_port(f"[::]:{port}")
     server.start()
-    print('Server started on port %s' % port)
+    print(f"Server started on port {port}")
     server.wait_for_termination()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     logging.basicConfig()
     serve()
