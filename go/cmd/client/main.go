@@ -61,5 +61,5 @@ func main() {
 	fmt.Printf("Mul: %0.2f\n", respCalc.GetMultiplication())
 	fmt.Printf("Div: %0.2f\n", respCalc.GetDivision())
 
-	fmt.Printf("Elapsed: %dms\n", respCalc.GetResponseInfo().ResponseTime.AsTime().Sub(reqCalc.GetRequestInfo().Timestamp.AsTime()).Abs().Milliseconds())
+	fmt.Printf("Elapsed: %dms\n", resp.GetResponseInfo().ResponseTime.AsTime().Sub(resp.GetResponseInfo().RequestTime.AsTime()).Abs().Milliseconds())
 }

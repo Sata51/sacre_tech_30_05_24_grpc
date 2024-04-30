@@ -2,6 +2,7 @@ const PROTO_PATH = __dirname + "/../proto_files/service.proto";
 
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
+const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -12,18 +13,37 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const service_proto = grpc.loadPackageDefinition(packageDefinition).service;
 
 const sayHello = (call, callback) => {
-  callback(null, { message: `Hello from node, ${call.request.name}!` });
+  const t = new Timestamp();
+  t.setSeconds(call.request.request_info.timestamp.seconds);
+  t.setNanos(call.request.request_info.timestamp.nanos);
+
+  callback(null, {
+    message: `Hello from node, ${call.request.name}!`,
+    response_info: {
+      request_time: t,
+      response_time: Timestamp.fromDate(new Date()),
+    },
+  });
 };
 
 const calculate = (call, callback) => {
   const A = call.request.a;
   const B = call.request.b;
 
+  const t = new Timestamp();
+  t.setSeconds(call.request.request_info.timestamp.seconds);
+  t.setNanos(call.request.request_info.timestamp.nanos);
+
   callback(null, {
     addition: A + B,
     subtraction: A - B,
     multiplication: A * B,
     division: B === 0 ? 0 : A / B,
+
+    response_info: {
+      request_time: t,
+      response_time: Timestamp.fromDate(new Date()),
+    },
   });
 };
 

@@ -2,10 +2,15 @@ const grpc = require("@grpc/grpc-js");
 
 const service = require("./gen/service_grpc_pb");
 const response = require("./gen/response_pb");
+const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
 
 const sayHello = (call, callback) => {
   const reply = new response.HelloResponse();
   reply.setMessage(`Hello from node, ${call.request.getName()}!`);
+  const info = new response.ClientResponseInfo();
+  info.setRequestTime(call.request.getRequestInfo().getTimestamp());
+  info.setResponseTime(Timestamp.fromDate(new Date()));
+  reply.setResponseInfo(info);
   callback(null, reply);
 };
 
@@ -18,6 +23,11 @@ const calculate = (call, callback) => {
   reply.setSubtraction(A - B);
   reply.setMultiplication(A * B);
   reply.setDivision(B === 0 ? 0 : A / B);
+
+  const info = new response.ClientResponseInfo();
+  info.setRequestTime(call.request.getRequestInfo().getTimestamp());
+  info.setResponseTime(Timestamp.fromDate(new Date()));
+  reply.setResponseInfo(info);
 
   callback(null, reply);
 };
