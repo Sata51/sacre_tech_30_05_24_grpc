@@ -3,6 +3,7 @@ lib_dir = File.join(this_dir, 'gen')
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
 require 'grpc'
+require 'google/protobuf/well_known_types'
 require 'service_services_pb'
 
 
@@ -10,13 +11,19 @@ def main
   helloStub = Service::HelloService::Stub.new('localhost:50051', :this_channel_is_insecure)
   calcStub = Service::CalculatorService::Stub.new('localhost:50051', :this_channel_is_insecure)
   begin
-    message = helloStub.say_hello(Service::HelloRequest.new(name: 'Sata'))
+    message = helloStub.say_hello(Service::HelloRequest.new(name: 'Sata', request_info: Service::ClientRequestInfo.new(timestamp: Google::Protobuf::Timestamp.from_time(Time.now))))
     p message.message
-    response = calcStub.calculate(Service::CalculatorRequest.new(a: 10, b: 18))
+
+    p "Elapsed time: #{message.response_info.request_time.to_time.to_i - message.response_info.response_time.to_time.to_i} ms"
+    p "---------------------------------"
+    response = calcStub.calculate(Service::CalculatorRequest.new(a: 10, b: 18, request_info: Service::ClientRequestInfo.new(timestamp: Google::Protobuf::Timestamp.from_time(Time.now))))
     p "Addition: #{response.addition}"
     p "Subtraction: #{response.subtraction}"
     p "Multiplication: #{response.multiplication}"
     p "Division: #{response.division}"
+
+    p "Elapsed time: #{response.response_info.request_time.to_time.to_i - response.response_info.response_time.to_time.to_i} ms"
+    p "---------------------------------"
   rescue GRPC::BadStatus => e
     abort "ERROR: #{e.message}"
   end

@@ -32,10 +32,17 @@ const main = () => {
       }
       console.log(response.message);
 
+      const responseTime = new Timestamp();
+      responseTime.setSeconds(response.response_info.response_time.seconds);
+      responseTime.setNanos(response.response_info.response_time.nanos);
+
+      const requestTime = new Timestamp();
+      requestTime.setSeconds(response.response_info.request_time.seconds);
+      requestTime.setNanos(response.response_info.request_time.nanos);
+
       console.log(
         "elapsed time: ",
-        response.response_info.response_time.toDate() -
-          response.request_info.timestamp.toDate()
+        responseTime.toDate() - requestTime.toDate()
       );
     }
   );
@@ -61,10 +68,17 @@ const main = () => {
         `Addition: ${response.addition}\nSubtraction: ${response.subtraction}\nMultiplication: ${response.multiplication}\nDivision: ${response.division}`
       );
 
+      const responseTime = new Timestamp();
+      responseTime.setSeconds(response.response_info.response_time.seconds);
+      responseTime.setNanos(response.response_info.response_time.nanos);
+
+      const requestTime = new Timestamp();
+      requestTime.setSeconds(response.response_info.request_time.seconds);
+      requestTime.setNanos(response.response_info.request_time.nanos);
+
       console.log(
         "elapsed time: ",
-        response.response_info.response_time.toDate() -
-          response.request_info.timestamp.toDate()
+        responseTime.toDate() - requestTime.toDate()
       );
     }
   );

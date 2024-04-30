@@ -25,7 +25,7 @@ const main = () => {
     console.log(
       "elapsed time: ",
       response.getResponseInfo().getResponseTime().toDate() -
-        response.getRequestInfo().getTimestamp().toDate()
+        response.getResponseInfo().getRequestTime().toDate()
     );
   });
 
@@ -54,7 +54,7 @@ const main = () => {
     console.log(
       "elapsed time: ",
       response.getResponseInfo().getResponseTime().toDate() -
-        response.getRequestInfo().getTimestamp().toDate()
+        response.getResponseInfo().getRequestTime().toDate()
     );
   });
 };
