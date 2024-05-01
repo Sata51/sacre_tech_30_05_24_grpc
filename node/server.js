@@ -18,7 +18,7 @@ const sayHello = (call, callback) => {
   t.setNanos(call.request.request_info.timestamp.nanos);
 
   callback(null, {
-    message: `Hello from node, ${call.request.name}!`,
+    message: `Hello from node (dynamic), ${call.request.name}!`,
     response_info: {
       request_time: t,
       response_time: Timestamp.fromDate(new Date()),

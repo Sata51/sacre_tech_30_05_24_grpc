@@ -19,6 +19,9 @@ build:
 	@go build -mod=vendor -v -o ${PKG_SERVER_OUTPUT} $(PKG_SERVER)
 	@go build -mod=vendor -v -o ${PKG_CLIENT_OUTPUT} $(PKG_CLIENT)
 
+build_docker_server:
+	@CGO_ENABLED=0 GOOS=linux go build -mod=vendor -v -o ${PKG_SERVER_OUTPUT} $(PKG_SERVER)
+
 run-server: build
 	@./bin/server
 

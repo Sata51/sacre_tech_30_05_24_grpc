@@ -35,8 +35,14 @@ install:
 	@cd python && uv venv && source .venv/bin/activate && uv pip install grpcio grpcio-tools
 
 
-docker_build_dart:
-	@docker build -t st_grpc:dart -f dart.Dockerfile .
+docker_build_dart_srv:
+	@docker build -t st_grpc:dart-srv -f dart.Dockerfile .
 
-docker_run_dart:
-	@docker run -it --rm -p 50051:50051 st_grpc:dart
+docker_build_go_srv:
+	@docker build -t st_grpc:go-srv -f go.Dockerfile .
+
+docker_run_dart_srv:
+	@docker run -it --rm -p 50051:50051 st_grpc:dart-srv
+
+docker_run_go_srv:
+	@docker run -it --rm -p 50051:50051 st_grpc:go-srv
