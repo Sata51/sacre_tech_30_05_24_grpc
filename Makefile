@@ -41,8 +41,22 @@ docker_build_dart_srv:
 docker_build_go_srv:
 	@docker build -t st_grpc:go-srv -f go.Dockerfile .
 
+docker_build_node_srv_dyn:
+	@docker build -t st_grpc:node-dyn-srv -f node-dyn.Dockerfile .
+
+docker_build_node_srv_static:
+	@docker build -t st_grpc:node-static-srv -f node-static.Dockerfile .
+
+docker_build: docker_build_dart_srv docker_build_go_srv docker_build_node_srv_dyn docker_build_node_srv_static
+
 docker_run_dart_srv:
 	@docker run -it --rm -p 50051:50051 st_grpc:dart-srv
 
 docker_run_go_srv:
 	@docker run -it --rm -p 50051:50051 st_grpc:go-srv
+
+docker_run_node_srv_dyn:
+	@docker run -it --rm -p 50051:50051 st_grpc:node-dyn-srv
+
+docker_run_node_srv_static:
+	@docker run -it --rm -p 50051:50051 st_grpc:node-static-srv
