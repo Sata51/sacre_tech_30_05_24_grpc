@@ -20,6 +20,9 @@ const main = () => {
       console.error(err);
       return;
     }
+
+    console.log("From language: ", response.getResponseInfo().getLanguage());
+
     console.log(response.getMessage());
 
     console.log(
@@ -47,6 +50,7 @@ const main = () => {
       console.error(err);
       return;
     }
+    console.log("From language: ", response.getResponseInfo().getLanguage());
     console.log(
       `Addition: ${response.getAddition()}\nSubtraction: ${response.getSubtraction()}\nMultiplication: ${response.getMultiplication()}\nDivision: ${response.getDivision()}`
     );

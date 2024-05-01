@@ -12,11 +12,14 @@ def main
   calcStub = Service::CalculatorService::Stub.new('localhost:50051', :this_channel_is_insecure)
   begin
     message = helloStub.say_hello(Service::HelloRequest.new(name: 'Sata', request_info: Service::ClientRequestInfo.new(timestamp: Google::Protobuf::Timestamp.from_time(Time.now))))
+    p "From language: #{message.response_info.language}"
     p message.message
 
     p "Elapsed time: #{message.response_info.request_time.to_time.to_i - message.response_info.response_time.to_time.to_i} ms"
     p "---------------------------------"
     response = calcStub.calculate(Service::CalculatorRequest.new(a: 10, b: 18, request_info: Service::ClientRequestInfo.new(timestamp: Google::Protobuf::Timestamp.from_time(Time.now))))
+
+    p "From language: #{message.response_info.language}"
     p "Addition: #{response.addition}"
     p "Subtraction: #{response.subtraction}"
     p "Multiplication: #{response.multiplication}"

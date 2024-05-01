@@ -33,6 +33,7 @@ func (c *calcServiceServer) Calculate(ctx context.Context, req *pb.CalculatorReq
 		ResponseInfo: &pb.ClientResponseInfo{
 			RequestTime:  req.GetRequestInfo().GetTimestamp(),
 			ResponseTime: timestamppb.Now(),
+			Language:     "go",
 		},
 	}, nil
 }

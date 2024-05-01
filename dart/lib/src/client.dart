@@ -35,6 +35,7 @@ class Client {
       ..requestInfo = info;
     final response = await _helloServiceClient.sayHello(request);
 
+    print("From language: ${response.responseInfo.language}");
     print(response.message);
     print(
         'Elapsed time: ${response.responseInfo.responseTime.toDateTime().millisecondsSinceEpoch - response.responseInfo.requestTime.toDateTime().millisecondsSinceEpoch}ms');
@@ -48,6 +49,9 @@ class Client {
       ..b = b
       ..requestInfo = info;
     final response = await _calculatorServiceClient.calculate(request);
+
+    print("From language: ${response.responseInfo.language}");
+
     print("Addition: ${response.addition}");
     print("Subtraction: ${response.subtraction}");
     print("Multiplication: ${response.multiplication}");

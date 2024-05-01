@@ -34,41 +34,24 @@ install:
 	@python3 -m pip install --user grpcio-tools
 	@cd python && uv venv && source .venv/bin/activate && uv pip install grpcio grpcio-tools
 
+folders:
+	@mkdir -p ./dev/infra/data/traefik-access-log
+	@if ! test -f ./dev/infra/data/traefik-access-log/access.log; then \
+		touch ./dev/infra/data/traefik-access-log/access.log; \
+	fi
 
-docker_build_dart_srv:
-	@docker build -t st_grpc:dart-srv -f dart.Dockerfile .
+gen_cert:
+	@cd ./dev/infra/certs && ./gen_cert.sh
 
-docker_build_go_srv:
-	@docker build -t st_grpc:go-srv -f go.Dockerfile .
+infra_setup: gen_cert
+	@docker compose build
+	@docker compose pull
 
-docker_build_node_srv_dyn:
-	@docker build -t st_grpc:node-dyn-srv -f node-dyn.Dockerfile .
+infra_up: folders
+	@docker compose up -d
 
-docker_build_node_srv_static:
-	@docker build -t st_grpc:node-static-srv -f node-static.Dockerfile .
-
-docker_build_python_srv:
-	@docker build -t st_grpc:python-srv -f python.Dockerfile .
-
-docker_build_ruby_srv:
-	@docker build -t st_grpc:ruby-srv -f ruby.Dockerfile .
-
-docker_build: docker_build_dart_srv docker_build_go_srv docker_build_node_srv_dyn docker_build_node_srv_static docker_build_python_srv docker_build_ruby_srv
-
-docker_run_dart_srv:
-	@docker run -it --rm -p 50051:50051 st_grpc:dart-srv
-
-docker_run_go_srv:
-	@docker run -it --rm -p 50051:50051 st_grpc:go-srv
-
-docker_run_node_srv_dyn:
-	@docker run -it --rm -p 50051:50051 st_grpc:node-dyn-srv
-
-docker_run_node_srv_static:
-	@docker run -it --rm -p 50051:50051 st_grpc:node-static-srv
-
-docker_run_python_srv:
-	@docker run -it --rm -p 50051:50051 st_grpc:python-srv
-
-docker_run_ruby_srv:
-	@docker run -it --rm -p 50051:50051 st_grpc:ruby-srv
+infra_down:
+	@docker compose down --remove-orphans
+	@docker volume prune -f
+	@docker network prune -f
+	@rm -rf ./dev/infra/data

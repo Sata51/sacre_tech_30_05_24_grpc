@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dart/gen/google/protobuf/timestamp.pb.dart';
 import 'package:dart/gen/request.pb.dart';
 import 'package:dart/gen/response.pb.dart';
@@ -12,7 +14,8 @@ class HelloService extends HelloServiceBase {
     response.message = 'Hello from dart, ${request.name}!';
     response.responseInfo = ClientResponseInfo()
       ..requestTime = request.requestInfo.timestamp
-      ..responseTime = Timestamp.fromDateTime(DateTime.now());
+      ..responseTime = Timestamp.fromDateTime(DateTime.now())
+      ..language = "dart";
     return response;
   }
 }
@@ -29,7 +32,8 @@ class CalculatorService extends CalculatorServiceBase {
 
     response.responseInfo = ClientResponseInfo()
       ..requestTime = request.requestInfo.timestamp
-      ..responseTime = Timestamp.fromDateTime(DateTime.now());
+      ..responseTime = Timestamp.fromDateTime(DateTime.now())
+      ..language = "dart";
 
     return response;
   }
@@ -43,5 +47,15 @@ class Server {
     ]);
     await server.serve(port: 50051);
     print('Server listening on port ${server.port}...');
+
+    // Handle SIGINT and SIGTERM
+    ProcessSignal.sigint.watch().listen((signal) async {
+      print('Received signal $signal, shutting down...');
+      await server.shutdown();
+    });
+    ProcessSignal.sigterm.watch().listen((signal) async {
+      print('Received signal $signal, shutting down...');
+      await server.shutdown();
+    });
   }
 }

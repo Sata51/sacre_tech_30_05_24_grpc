@@ -17,6 +17,7 @@ class HelloService(service_pb2_grpc.HelloServiceServicer):
                 nanos=request.request_info.timestamp.nanos,
             ),
             response_time=response_time,
+            language="Python",
         )
         return response_pb2.HelloResponse(
             message=f"Hello from python, {request.name}!",
@@ -35,6 +36,7 @@ class CalculatorService(service_pb2_grpc.CalculatorServiceServicer):
                 nanos=request.request_info.timestamp.nanos,
             ),
             response_time=response_time,
+            language="Python",
         )
         return response_pb2.CalculatorResponse(
             addition=request.a + request.b,

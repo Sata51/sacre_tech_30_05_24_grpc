@@ -29,12 +29,14 @@ def run():
         calc_response = calc_stub.Calculate(
             request_pb2.CalculatorRequest(a=22, b=31, request_info=calc_info)
         )
+    print("From language: %s" % hello_response.response_info.language)
     print("HelloResponse: %s" % hello_response.message)
     print(
         f"Elapsed time: {hello_response.response_info.response_time.ToMilliseconds() - hello_response.response_info.request_time.ToMilliseconds()} ms"
     )
 
     print("CalculatorResponse:")
+    print("From language: %s" % hello_response.response_info.language)
     print("  addition:", calc_response.addition)
     print("  subtraction:", calc_response.subtraction)
     print("  multiplication:", calc_response.multiplication)

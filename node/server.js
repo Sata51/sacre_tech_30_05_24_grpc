@@ -22,6 +22,7 @@ const sayHello = (call, callback) => {
     response_info: {
       request_time: t,
       response_time: Timestamp.fromDate(new Date()),
+      language: "node-dynamic",
     },
   });
 };
@@ -43,6 +44,7 @@ const calculate = (call, callback) => {
     response_info: {
       request_time: t,
       response_time: Timestamp.fromDate(new Date()),
+      language: "node-dynamic",
     },
   });
 };

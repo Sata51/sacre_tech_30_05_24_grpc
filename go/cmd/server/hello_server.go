@@ -23,6 +23,7 @@ func (h *helloServiceServer) SayHello(ctx context.Context, req *pb.HelloRequest)
 		ResponseInfo: &pb.ClientResponseInfo{
 			RequestTime:  req.GetRequestInfo().GetTimestamp(),
 			ResponseTime: timestamppb.Now(),
+			Language:     "go",
 		},
 	}, nil
 }

@@ -11,7 +11,8 @@ class HelloServer < Service::HelloService::Service
   def say_hello(hello_req, _unused_call)
     responseInfo = Service::ClientResponseInfo.new(
       response_time: Google::Protobuf::Timestamp.from_time(Time.now),
-      request_time: hello_req.request_info.timestamp
+      request_time: hello_req.request_info.timestamp,
+      language: "Ruby"
     )
     Service::HelloResponse.new(
       message: "Hello from Ruby, #{hello_req.name}!",
@@ -24,7 +25,8 @@ class CalculatorServer < Service::CalculatorService::Service
   def calculate(calc_req, _unused_call)
     responseInfo = Service::ClientResponseInfo.new(
       response_time: Google::Protobuf::Timestamp.from_time(Time.now),
-      request_time: calc_req.request_info.timestamp
+      request_time: calc_req.request_info.timestamp,
+      language: "Ruby"
     )
     Service::CalculatorResponse.new(
       addition: calc_req.a + calc_req.b,

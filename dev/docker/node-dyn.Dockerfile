@@ -3,10 +3,6 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-WORKDIR /proto_files
-
-COPY ./proto_files/*.proto ./
-
 WORKDIR /app
 
 COPY ./node/package.json ./

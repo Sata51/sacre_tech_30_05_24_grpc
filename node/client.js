@@ -30,6 +30,8 @@ const main = () => {
         console.error(err);
         return;
       }
+      console.log("From language: ", response.response_info.language);
+
       console.log(response.message);
 
       const responseTime = new Timestamp();
@@ -64,6 +66,8 @@ const main = () => {
         console.error(err);
         return;
       }
+      console.log("From language: ", response.response_info.language);
+
       console.log(
         `Addition: ${response.addition}\nSubtraction: ${response.subtraction}\nMultiplication: ${response.multiplication}\nDivision: ${response.division}`
       );

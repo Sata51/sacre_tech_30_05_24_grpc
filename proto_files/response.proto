@@ -8,12 +8,14 @@ import "google/protobuf/timestamp.proto";
 message ClientResponseInfo{
     google.protobuf.Timestamp request_time = 1;
     google.protobuf.Timestamp response_time = 2;
+    string language = 3;
 }
 
 message HelloResponse{
     string message = 1;
     ClientResponseInfo response_info = 2;
 }
+
 
 message CalculatorResponse{
     float addition = 1;

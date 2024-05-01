@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-var serverAddr = flag.String("server_addr", "localhost:50051", "The server address in the format of host:port")
+var serverAddr = flag.String("server_addr", "grpc.sacre-tech.local:9001", "The server address in the format of host:port")
 
 func main() {
 	flag.Parse()
@@ -39,6 +39,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Printf("From language: %s\n", resp.GetResponseInfo().GetLanguage())
 	fmt.Println(resp.GetMessage())
 	fmt.Printf("Elapsed: %dms\n", resp.GetResponseInfo().ResponseTime.AsTime().Sub(resp.GetResponseInfo().RequestTime.AsTime()).Abs().Milliseconds())
 
@@ -56,6 +57,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Printf("From language: %s\n", resp.GetResponseInfo().GetLanguage())
+
 	fmt.Printf("Add: %0.2f\n", respCalc.GetAddition())
 	fmt.Printf("Sub: %0.2f\n", respCalc.GetSubtraction())
 	fmt.Printf("Mul: %0.2f\n", respCalc.GetMultiplication())

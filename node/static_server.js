@@ -7,10 +7,14 @@ const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
 const sayHello = (call, callback) => {
   const reply = new response.HelloResponse();
   reply.setMessage(`Hello from node (static), ${call.request.getName()}!`);
+
   const info = new response.ClientResponseInfo();
   info.setRequestTime(call.request.getRequestInfo().getTimestamp());
   info.setResponseTime(Timestamp.fromDate(new Date()));
+  info.setLanguage("node-static");
+
   reply.setResponseInfo(info);
+
   callback(null, reply);
 };
 
@@ -27,6 +31,7 @@ const calculate = (call, callback) => {
   const info = new response.ClientResponseInfo();
   info.setRequestTime(call.request.getRequestInfo().getTimestamp());
   info.setResponseTime(Timestamp.fromDate(new Date()));
+  info.setLanguage("node-static");
   reply.setResponseInfo(info);
 
   callback(null, reply);
