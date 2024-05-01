@@ -47,7 +47,13 @@ docker_build_node_srv_dyn:
 docker_build_node_srv_static:
 	@docker build -t st_grpc:node-static-srv -f node-static.Dockerfile .
 
-docker_build: docker_build_dart_srv docker_build_go_srv docker_build_node_srv_dyn docker_build_node_srv_static
+docker_build_python_srv:
+	@docker build -t st_grpc:python-srv -f python.Dockerfile .
+
+docker_build_ruby_srv:
+	@docker build -t st_grpc:ruby-srv -f ruby.Dockerfile .
+
+docker_build: docker_build_dart_srv docker_build_go_srv docker_build_node_srv_dyn docker_build_node_srv_static docker_build_python_srv docker_build_ruby_srv
 
 docker_run_dart_srv:
 	@docker run -it --rm -p 50051:50051 st_grpc:dart-srv
@@ -60,3 +66,9 @@ docker_run_node_srv_dyn:
 
 docker_run_node_srv_static:
 	@docker run -it --rm -p 50051:50051 st_grpc:node-static-srv
+
+docker_run_python_srv:
+	@docker run -it --rm -p 50051:50051 st_grpc:python-srv
+
+docker_run_ruby_srv:
+	@docker run -it --rm -p 50051:50051 st_grpc:ruby-srv
