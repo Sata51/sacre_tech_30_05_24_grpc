@@ -1,6 +1,7 @@
 *.Dockerfile
 go/
 node/
+php/
 proto_files/
 python/
 ruby/

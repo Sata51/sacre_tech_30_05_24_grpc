@@ -1,0 +1,18 @@
+{
+  "name": "PHP",
+  "image": "mcr.microsoft.com/vscode/devcontainers/php",
+  "forwardPorts": [
+    8199
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder}/../proto_files,target=/workspaces/sacre_tech_30_05_24_grpc/proto_files,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "sudo chmod a+x ./.devcontainer/postCreateCommand.sh && ./.devcontainer/postCreateCommand.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "BazelBuild.vscode-bazel"
+      ]
+    }
+  }
+}

@@ -1,6 +1,7 @@
 *.Dockerfile
 dart/
 go/
+php/
 python/
 ruby/
 node/gen
