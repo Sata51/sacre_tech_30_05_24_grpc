@@ -1,2 +1,2 @@
 start:
-	@symfony server:start --port=8199
+	@symfony local:server:start --port=8199

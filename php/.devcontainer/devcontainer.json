@@ -11,7 +11,8 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "BazelBuild.vscode-bazel"
+        "BazelBuild.vscode-bazel",
+        "mblode.twig-language-2"
       ]
     }
   }

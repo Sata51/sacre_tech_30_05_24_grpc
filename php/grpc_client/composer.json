@@ -13,6 +13,7 @@
         "doctrine/orm": "^3.1",
         "google/protobuf": "^4.26",
         "grpc/grpc": "^1.57",
+        "nesbot/carbon": "*",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.28",
         "symfony/asset": "7.0.*",
