@@ -8,6 +8,11 @@ volumes:
       type: none
       device: $PWD/dev/infra/data/traefik-access-log
 
+networks:
+  default:
+    name: sacre_tech
+    external: true
+
 services:
   dart_server:
     build:

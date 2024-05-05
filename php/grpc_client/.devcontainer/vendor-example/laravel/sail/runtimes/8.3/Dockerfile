@@ -17,7 +17,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
     && mkdir -p /etc/apt/keyrings \
-    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils librsvg2-bin fswatch ffmpeg nano  \
+    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils librsvg2-bin fswatch ffmpeg nano g++ gcc wget  \
     && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /etc/apt/keyrings/ppa_ondrej_php.gpg > /dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
@@ -49,6 +49,21 @@ RUN apt-get update \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV CC=/usr/bin/gcc
+ENV CXX=/usr/bin/g++
+
+RUN wget https://github.com/bazelbuild/bazel/releases/download/7.1.1/bazel-7.1.1-linux-arm64 -O /usr/local/bin/bazel && chmod +x /usr/local/bin/bazel
+
+ENV PATH="/usr/local/bin:${PATH}"
+
+WORKDIR /tmp
+RUN git clone https://github.com/grpc/grpc.git --depth 1 --single-branch --branch v1.63.0 --recurse-submodules --shallow-submodules
+
+WORKDIR /tmp
+RUN mkdir -p /usr/.local/protobuf
+RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v26.1/protoc-26.1-linux-aarch_64.zip && unzip protoc-26.1-linux-aarch_64.zip -d /usr/.local/protobuf
+ENV PATH="/usr/.local/protobuf/bin:${PATH}"
 
 # My customizations
 RUN apt-get update \

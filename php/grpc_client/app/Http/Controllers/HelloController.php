@@ -7,13 +7,16 @@ use Google\Protobuf\Timestamp;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Grpc;
+use Service\ClientRequestInfo;
+use Service\HelloRequest;
+use Service\HelloServiceClient;
 
 class HelloController extends Controller
 {
     public function hello(): View
     {
         $client = new HelloServiceClient('grpc.sacre-tech.local:9001', [
-            'credentials' => Grpc\ChannelCredentials::createInsecure()
+            'credentials' => Grpc\ChannelCredentials::createInsecure(),
         ]);
 
         $request = new HelloRequest();
@@ -26,7 +29,7 @@ class HelloController extends Controller
 
         list($reply, $status) = $client->SayHello($request)->wait();
         if ($status->code !== Grpc\STATUS_OK) {
-            return view('error.html.twig', [
+            return view('error', [
                 'code' => $status->code,
                 'details' => $status->details
             ]);

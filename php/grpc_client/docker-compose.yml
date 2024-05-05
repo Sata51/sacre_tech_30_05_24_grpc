@@ -9,7 +9,6 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
         ports:
-            - "${APP_PORT:-80}:80"
             - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
         environment:
             WWWUSER: "${WWWUSER}"
@@ -19,10 +18,18 @@ services:
             IGNITION_LOCAL_SITES_PATH: "${PWD}"
         volumes:
             - ".:/var/www/html"
+            - "../../proto_files:/proto_files"
         networks:
             - sail
         depends_on:
             - redis
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.laravel.entrypoints=websecure"
+            - "traefik.http.routers.laravel.tls=true"
+            - "traefik.http.routers.laravel.rule=Host(`front.sacre-tech.local`)"
+            - "traefik.http.routers.laravel.service=laravel"
+            - "traefik.http.services.laravel.loadbalancer.server.port=8199"
     redis:
         image: "redis:alpine"
         ports:
@@ -41,6 +48,10 @@ services:
 networks:
     sail:
         driver: bridge
+    default:
+        name: sacre_tech
+        external: true
+
 volumes:
     sail-redis:
         driver: local

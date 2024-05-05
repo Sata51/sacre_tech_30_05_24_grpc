@@ -43,11 +43,14 @@ folders:
 gen_cert:
 	@cd ./dev/infra/certs && ./gen_cert.sh
 
+netwk:
+	@docker network create sacre_tech || true
+
 infra_setup: gen_cert
 	@docker compose build
 	@docker compose pull
 
-infra_up: folders
+infra_up: folders netwk
 	@docker compose up -d
 
 infra_down:
