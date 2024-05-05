@@ -56,5 +56,6 @@ infra_up: folders netwk
 infra_down:
 	@docker compose down --remove-orphans
 	@docker volume prune -f
-	@docker network prune -f
 	@rm -rf ./dev/infra/data
+
+infra_restart: infra_down infra_up

@@ -8,6 +8,7 @@ services:
         image: sail-8.3/app
         extra_hosts:
             - "host.docker.internal:host-gateway"
+            - "grpc.sacre-tech.local:host-gateway"
         ports:
             - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
         environment:
@@ -48,7 +49,7 @@ services:
 networks:
     sail:
         driver: bridge
-    default:
+    sacre-tech:
         name: sacre_tech
         external: true
 

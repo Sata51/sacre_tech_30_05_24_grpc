@@ -6,3 +6,5 @@
   <p>Code: {{ $code }}</p>
   <p>Details: {{ $details }}</p>
 </body>
+
+</html>

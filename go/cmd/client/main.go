@@ -13,6 +13,8 @@ import (
 
 var serverAddr = flag.String("server_addr", "grpc.sacre-tech.local:9001", "The server address in the format of host:port")
 
+// var serverAddr = flag.String("server_addr", "localhost:50051", "The server address in the format of host:port")
+
 func main() {
 	flag.Parse()
 

@@ -13,15 +13,11 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const service_proto = grpc.loadPackageDefinition(packageDefinition).service;
 
 const sayHello = (call, callback) => {
-  const t = new Timestamp();
-  t.setSeconds(call.request.request_info.timestamp.seconds);
-  t.setNanos(call.request.request_info.timestamp.nanos);
-
   callback(null, {
     message: `Hello from node (dynamic), ${call.request.name}!`,
     response_info: {
-      request_time: t,
-      response_time: Timestamp.fromDate(new Date()),
+      request_time: call.request.request_info.timestamp,
+      response_time: Timestamp.fromDate(new Date()).toObject(),
       language: "node-dynamic",
     },
   });
@@ -31,10 +27,6 @@ const calculate = (call, callback) => {
   const A = call.request.a;
   const B = call.request.b;
 
-  const t = new Timestamp();
-  t.setSeconds(call.request.request_info.timestamp.seconds);
-  t.setNanos(call.request.request_info.timestamp.nanos);
-
   callback(null, {
     addition: A + B,
     subtraction: A - B,
@@ -42,8 +34,8 @@ const calculate = (call, callback) => {
     division: B === 0 ? 0 : A / B,
 
     response_info: {
-      request_time: t,
-      response_time: Timestamp.fromDate(new Date()),
+      request_time: call.request.request_info.timestamp,
+      response_time: Timestamp.fromDate(new Date()).toObject(),
       language: "node-dynamic",
     },
   });
