@@ -3,6 +3,7 @@ const grpc = require("@grpc/grpc-js");
 const service = require("./gen/service_grpc_pb");
 const response = require("./gen/response_pb");
 const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
+const { gamma } = require("mathjs");
 
 const sayHello = (call, callback) => {
   const reply = new response.HelloResponse();
@@ -27,6 +28,12 @@ const calculate = (call, callback) => {
   reply.setSubtraction(A - B);
   reply.setMultiplication(A * B);
   reply.setDivision(B === 0 ? 0 : A / B);
+  reply.setPower(Math.pow(A, B));
+  reply.setMod(A % B);
+  reply.setSqrta(Math.sqrt(A));
+  reply.setSqrtb(Math.sqrt(B));
+  reply.setFactoriala(gamma(A + 1));
+  reply.setFactorialb(gamma(B + 1));
 
   const info = new response.ClientResponseInfo();
   info.setRequestTime(call.request.getRequestInfo().getTimestamp());

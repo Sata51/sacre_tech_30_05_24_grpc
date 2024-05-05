@@ -24,6 +24,13 @@ def main
     p "Subtraction: #{response.subtraction}"
     p "Multiplication: #{response.multiplication}"
     p "Division: #{response.division}"
+    p "Power: #{response.power}"
+    p "Modulus: #{response.mod}"
+    p "Square root of A: #{response.sqrtA}"
+    p "Square root of B: #{response.sqrtB}"
+    p "Factorial of A: #{response.factorialA}"
+    p "Factorial of B: #{response.factorialB}"
+
 
     p "Elapsed time: #{response.response_info.request_time.to_time.to_i - response.response_info.response_time.to_time.to_i} ms"
     p "---------------------------------"

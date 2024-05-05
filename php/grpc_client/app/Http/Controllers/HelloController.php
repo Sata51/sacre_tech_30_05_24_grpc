@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QueryStat as ResourcesQueryStat;
+use App\Models\QueryStat as ModelsQueryStat;
 use Carbon\Carbon;
 use Google\Protobuf\Timestamp;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Grpc;
+use QueryStat;
 use Service\ClientRequestInfo;
 use Service\HelloRequest;
 use Service\HelloServiceClient;
@@ -64,10 +67,15 @@ class HelloController extends Controller
             'credentials' => Grpc\ChannelCredentials::createInsecure(),
         ]);
 
-        // Store result in an array with the following structure:
+        // Store result in an array of arrays with shape:
         // [
-        //      "language":   [ the time it took to process the request in milliseconds ],
+        //     'language' => [
+        //         'duration' => int,
+        //         'request_time' => Carbon,
+        //         'language' => string
+        //     ]
         // ]
+
         $reqRes = array();
 
         for ($i = 0; $i < $count; $i++) {
@@ -99,33 +107,22 @@ class HelloController extends Controller
 
             $lang = $reply->getResponseInfo()->getLanguage();
 
-            $elapsed = $respTime->diffInMilliseconds($reqTime, true);
+            $mqs = new ModelsQueryStat();
+            $mqs->duration = $respTime->diffInMicroseconds($reqTime, true);
+            $mqs->requestTime = $reqTime->getPreciseTimestamp(6);
+            $mqs->language = $lang;
+
+            $qs = new ResourcesQueryStat($mqs);
 
             if (!array_key_exists($lang, $reqRes)) {
                 $reqRes[$lang] = array();
             }
-            array_push($reqRes[$lang], $elapsed);
+            array_push($reqRes[$lang], $qs);
         }
         $client->close();
 
-        $total = array();
-        $avg = array();
-        $min = array();
-        $max = array();
-
-        foreach ($reqRes as $lang => $times) {
-            $total[$lang] = sizeof($times);
-            $avg[$lang] = array_sum($times) / count($times);
-            $min[$lang] = min($times);
-            $max[$lang] = max($times);
-        }
-
-        return view('helloMany', [
+        return view('queryStats', [
             'reqRes' => $reqRes,
-            'total' => $total,
-            'avg' => $avg,
-            'min' => $min,
-            'max' => $max
         ]);
     }
 }

@@ -5,6 +5,7 @@ import grpc
 from gen import response_pb2, service_pb2_grpc
 from google.protobuf.timestamp_pb2 import Timestamp
 from datetime import datetime
+import math
 
 
 class HelloService(service_pb2_grpc.HelloServiceServicer):
@@ -43,6 +44,12 @@ class CalculatorService(service_pb2_grpc.CalculatorServiceServicer):
             subtraction=request.a - request.b,
             multiplication=request.a * request.b,
             division=request.a / request.b if request.b != 0 else 0,
+            power=request.a ** request.b,
+            mod=request.a % request.b,
+            sqrtA=math.sqrt(request.a) if request.a >= 0 else 0,
+            sqrtB=math.sqrt(request.b) if request.b >= 0 else 0,
+            factorialA=math.gamma(request.a + 1),
+            factorialB=math.gamma(request.b + 1),
             response_info=info,
         )
 

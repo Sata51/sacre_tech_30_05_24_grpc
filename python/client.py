@@ -41,6 +41,12 @@ def run():
     print("  subtraction:", calc_response.subtraction)
     print("  multiplication:", calc_response.multiplication)
     print("  division:", calc_response.division)
+    print("  power:", calc_response.power)
+    print("  mod:", calc_response.mod)
+    print("  Square root of A:", calc_response.sqrtA)
+    print("  Square root of B:", calc_response.sqrtB)
+    print("  Factorial A:", calc_response.factorialA)
+    print("  Factorial B:", calc_response.factorialB)
     print(
         f"Elapsed time: {calc_response.response_info.response_time.ToMilliseconds() - calc_response.response_info.request_time.ToMilliseconds()} ms"
     )

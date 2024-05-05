@@ -69,7 +69,7 @@ const main = () => {
       console.log("From language: ", response.response_info.language);
 
       console.log(
-        `Addition: ${response.addition}\nSubtraction: ${response.subtraction}\nMultiplication: ${response.multiplication}\nDivision: ${response.division}`
+        `Addition: ${response.addition}\nSubtraction: ${response.subtraction}\nMultiplication: ${response.multiplication}\nDivision: ${response.division}\nPower: ${response.power}\nModulus: ${response.mod}\nSquare root of A: ${response.sqrtA}\nSquare root of B: ${response.sqrtB}\nFactorial of A: ${response.factorialA}\nFactorial of B: ${response.factorialB}`
       );
 
       const responseTime = new Timestamp();

@@ -66,6 +66,12 @@ func main() {
 	fmt.Printf("Sub: %0.2f\n", respCalc.GetSubtraction())
 	fmt.Printf("Mul: %0.2f\n", respCalc.GetMultiplication())
 	fmt.Printf("Div: %0.2f\n", respCalc.GetDivision())
+	fmt.Printf("Pow: %0.2f\n", respCalc.GetPower())
+	fmt.Printf("Mod: %0.2f\n", respCalc.GetMod())
+	fmt.Printf("Square root of A: %0.2f\n", respCalc.GetSqrtA())
+	fmt.Printf("Square root of B: %0.2f\n", respCalc.GetSqrtB())
+	fmt.Printf("Factorial of A: %0.2f\n", respCalc.GetFactorialA())
+	fmt.Printf("Factorial of B: %0.2f\n", respCalc.GetFactorialB())
 
 	fmt.Printf("Elapsed: %dms\n", resp.GetResponseInfo().ResponseTime.AsTime().Sub(resp.GetResponseInfo().RequestTime.AsTime()).Abs().Milliseconds())
 }

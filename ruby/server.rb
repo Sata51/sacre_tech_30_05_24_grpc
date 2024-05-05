@@ -33,6 +33,12 @@ class CalculatorServer < Service::CalculatorService::Service
       subtraction: calc_req.a - calc_req.b,
       multiplication: calc_req.a * calc_req.b,
       division: calc_req.b != 0 ? calc_req.a / calc_req.b : 0,
+      power: calc_req.a ** calc_req.b,
+      mod: calc_req.a % calc_req.b,
+      sqrtA: Math.sqrt(calc_req.a),
+      sqrtB: Math.sqrt(calc_req.b),
+      factorialA: Math.gamma(calc_req.a + 1),
+      factorialB: Math.gamma(calc_req.b + 1),
       response_info: responseInfo
     )
   end

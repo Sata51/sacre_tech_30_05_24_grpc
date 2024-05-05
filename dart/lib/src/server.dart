@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dart/gen/google/protobuf/timestamp.pb.dart';
 import 'package:dart/gen/request.pb.dart';
 import 'package:dart/gen/response.pb.dart';
 import 'package:dart/gen/service.pbgrpc.dart';
+import 'package:dart_numerics/dart_numerics.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/service_api.dart';
 
@@ -28,7 +30,13 @@ class CalculatorService extends CalculatorServiceBase {
       ..addition = request.a + request.b
       ..subtraction = request.a - request.b
       ..multiplication = request.a * request.b
-      ..division = request.b == 0 ? 0 : request.a / request.b;
+      ..division = request.b == 0 ? 0 : request.a / request.b
+      ..power = pow(request.a, request.b).toDouble()
+      ..sqrtA = sqrt(request.a)
+      ..sqrtB = sqrt(request.b)
+      ..mod = request.b == 0 ? 0 : request.a % request.b
+      ..factorialA = gamma(request.a + 1).toDouble()
+      ..factorialB = gamma(request.b + 1).toDouble();
 
     response.responseInfo = ClientResponseInfo()
       ..requestTime = request.requestInfo.timestamp

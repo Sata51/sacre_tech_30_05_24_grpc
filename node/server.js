@@ -3,6 +3,7 @@ const PROTO_PATH = __dirname + "/../proto_files/service.proto";
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
+const { gamma } = require("mathjs");
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -32,6 +33,12 @@ const calculate = (call, callback) => {
     subtraction: A - B,
     multiplication: A * B,
     division: B === 0 ? 0 : A / B,
+    power: Math.pow(A, B),
+    mod: A % B,
+    sqrtA: Math.sqrt(A),
+    sqrtB: Math.sqrt(B),
+    factorialA: gamma(A + 1),
+    factorialB: gamma(B + 1),
 
     response_info: {
       request_time: call.request.request_info.timestamp,

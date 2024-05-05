@@ -30,7 +30,31 @@ class CalculatorResponse extends \Google\Protobuf\Internal\Message
      */
     protected $division = 0.0;
     /**
-     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 5;</code>
+     * Generated from protobuf field <code>float power = 5;</code>
+     */
+    protected $power = 0.0;
+    /**
+     * Generated from protobuf field <code>float mod = 6;</code>
+     */
+    protected $mod = 0.0;
+    /**
+     * Generated from protobuf field <code>float sqrtA = 7;</code>
+     */
+    protected $sqrtA = 0.0;
+    /**
+     * Generated from protobuf field <code>float sqrtB = 8;</code>
+     */
+    protected $sqrtB = 0.0;
+    /**
+     * Generated from protobuf field <code>float factorialA = 9;</code>
+     */
+    protected $factorialA = 0.0;
+    /**
+     * Generated from protobuf field <code>float factorialB = 10;</code>
+     */
+    protected $factorialB = 0.0;
+    /**
+     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 11;</code>
      */
     protected $response_info = null;
 
@@ -44,6 +68,12 @@ class CalculatorResponse extends \Google\Protobuf\Internal\Message
      *     @type float $subtraction
      *     @type float $multiplication
      *     @type float $division
+     *     @type float $power
+     *     @type float $mod
+     *     @type float $sqrtA
+     *     @type float $sqrtB
+     *     @type float $factorialA
+     *     @type float $factorialB
      *     @type \Service\ClientResponseInfo $response_info
      * }
      */
@@ -141,7 +171,139 @@ class CalculatorResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 5;</code>
+     * Generated from protobuf field <code>float power = 5;</code>
+     * @return float
+     */
+    public function getPower()
+    {
+        return $this->power;
+    }
+
+    /**
+     * Generated from protobuf field <code>float power = 5;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setPower($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->power = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float mod = 6;</code>
+     * @return float
+     */
+    public function getMod()
+    {
+        return $this->mod;
+    }
+
+    /**
+     * Generated from protobuf field <code>float mod = 6;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setMod($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->mod = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float sqrtA = 7;</code>
+     * @return float
+     */
+    public function getSqrtA()
+    {
+        return $this->sqrtA;
+    }
+
+    /**
+     * Generated from protobuf field <code>float sqrtA = 7;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setSqrtA($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->sqrtA = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float sqrtB = 8;</code>
+     * @return float
+     */
+    public function getSqrtB()
+    {
+        return $this->sqrtB;
+    }
+
+    /**
+     * Generated from protobuf field <code>float sqrtB = 8;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setSqrtB($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->sqrtB = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float factorialA = 9;</code>
+     * @return float
+     */
+    public function getFactorialA()
+    {
+        return $this->factorialA;
+    }
+
+    /**
+     * Generated from protobuf field <code>float factorialA = 9;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setFactorialA($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->factorialA = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float factorialB = 10;</code>
+     * @return float
+     */
+    public function getFactorialB()
+    {
+        return $this->factorialB;
+    }
+
+    /**
+     * Generated from protobuf field <code>float factorialB = 10;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setFactorialB($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->factorialB = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 11;</code>
      * @return \Service\ClientResponseInfo|null
      */
     public function getResponseInfo()
@@ -160,7 +322,7 @@ class CalculatorResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 5;</code>
+     * Generated from protobuf field <code>.service.ClientResponseInfo response_info = 11;</code>
      * @param \Service\ClientResponseInfo $var
      * @return $this
      */
