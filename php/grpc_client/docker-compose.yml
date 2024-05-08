@@ -31,6 +31,11 @@ services:
             - "traefik.http.routers.laravel.rule=Host(`front.sacre-tech.local`)"
             - "traefik.http.routers.laravel.service=laravel"
             - "traefik.http.services.laravel.loadbalancer.server.port=8199"
+            - "traefik.http.routers.laravel-app.entrypoints=websecure"
+            - "traefik.http.routers.laravel-app.tls=true"
+            - "traefik.http.routers.laravel-app.rule=Host(`app.sacre-tech.local`)"
+            - "traefik.http.routers.laravel-app.service=laravel-app"
+            - "traefik.http.services.laravel-app.loadbalancer.server.port=5173"
     redis:
         image: "redis:alpine"
         ports:
