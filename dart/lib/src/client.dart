@@ -56,6 +56,12 @@ class Client {
     print("Subtraction: ${response.subtraction}");
     print("Multiplication: ${response.multiplication}");
     print("Division: ${response.division}");
+    print("Power: ${response.power}");
+    print("Modulus: ${response.mod}");
+    print("Square root of A: ${response.sqrtA}");
+    print("Square root of B: ${response.sqrtB}");
+    print("Factorial of A: ${response.factorialA}");
+    print("Factorial of B: ${response.factorialB}");
 
     print(
         'Elapsed time: ${response.responseInfo.responseTime.toDateTime().millisecondsSinceEpoch - response.responseInfo.requestTime.toDateTime().millisecondsSinceEpoch}ms');

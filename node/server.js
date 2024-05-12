@@ -3,6 +3,7 @@ const PROTO_PATH = __dirname + "/../proto_files/service.proto";
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const { Timestamp } = require("google-protobuf/google/protobuf/timestamp_pb");
+const { gamma } = require("mathjs");
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -13,15 +14,11 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const service_proto = grpc.loadPackageDefinition(packageDefinition).service;
 
 const sayHello = (call, callback) => {
-  const t = new Timestamp();
-  t.setSeconds(call.request.request_info.timestamp.seconds);
-  t.setNanos(call.request.request_info.timestamp.nanos);
-
   callback(null, {
     message: `Hello from node (dynamic), ${call.request.name}!`,
     response_info: {
-      request_time: t,
-      response_time: Timestamp.fromDate(new Date()),
+      request_time: call.request.request_info.timestamp,
+      response_time: Timestamp.fromDate(new Date()).toObject(),
       language: "node-dynamic",
     },
   });
@@ -31,19 +28,21 @@ const calculate = (call, callback) => {
   const A = call.request.a;
   const B = call.request.b;
 
-  const t = new Timestamp();
-  t.setSeconds(call.request.request_info.timestamp.seconds);
-  t.setNanos(call.request.request_info.timestamp.nanos);
-
   callback(null, {
     addition: A + B,
     subtraction: A - B,
     multiplication: A * B,
     division: B === 0 ? 0 : A / B,
+    power: Math.pow(A, B),
+    mod: A % B,
+    sqrtA: Math.sqrt(A),
+    sqrtB: Math.sqrt(B),
+    factorialA: gamma(A + 1),
+    factorialB: gamma(B + 1),
 
     response_info: {
-      request_time: t,
-      response_time: Timestamp.fromDate(new Date()),
+      request_time: call.request.request_info.timestamp,
+      response_time: Timestamp.fromDate(new Date()).toObject(),
       language: "node-dynamic",
     },
   });

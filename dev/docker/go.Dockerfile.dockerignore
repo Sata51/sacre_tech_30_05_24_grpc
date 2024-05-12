@@ -1,6 +1,7 @@
 *.Dockerfile
 dart/
 node/
+php/
 proto_files/
 python/
 ruby/

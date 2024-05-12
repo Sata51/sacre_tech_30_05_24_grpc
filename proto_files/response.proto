@@ -22,5 +22,11 @@ message CalculatorResponse{
     float subtraction = 2;
     float multiplication = 3;
     float division = 4;
-    ClientResponseInfo response_info = 5;
+    float power = 5;
+    float mod = 6;
+    float sqrtA = 7;
+    float sqrtB = 8;
+    float factorialA = 9;
+    float factorialB = 10;
+    ClientResponseInfo response_info = 11;
 }

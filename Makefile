@@ -43,15 +43,62 @@ folders:
 gen_cert:
 	@cd ./dev/infra/certs && ./gen_cert.sh
 
+netwk:
+	@docker network create sacre_tech || true
+
 infra_setup: gen_cert
 	@docker compose build
 	@docker compose pull
 
-infra_up: folders
+infra_up: folders netwk
 	@docker compose up -d
 
 infra_down:
 	@docker compose down --remove-orphans
 	@docker volume prune -f
-	@docker network prune -f
 	@rm -rf ./dev/infra/data
+
+infra_restart: infra_down infra_up
+
+
+load_test_hello:
+	@ghz \
+	--insecure \
+	--proto=proto_files/service.proto \
+	--call=service.HelloService/SayHello \
+	-D dev/tests/load/ghz-hello.json \
+	-n 10000 \
+	--rps 200 \
+	grpc.sacre-tech.local:9001
+
+load_test_hello_async:
+	@ghz \
+	--insecure \
+	--async \
+	--proto=proto_files/service.proto \
+	--call=service.HelloService/SayHello \
+	-D dev/tests/load/ghz-hello.json \
+	-c 10 -n 10000 \
+	--load-schedule=step --load-start=50 --load-end=150 --load-step=10 --load-step-duration=5s \
+	grpc.sacre-tech.local:9001
+
+load_test_calc:
+	@ghz \
+	--insecure \
+	--proto=proto_files/service.proto \
+	--call=service.CalculatorService/Calculate \
+	-D dev/tests/load/ghz-calc.json \
+	-n 10000 \
+	--rps 200 \
+	grpc.sacre-tech.local:9001
+
+load_test_calc_async:
+	@ghz \
+	--insecure \
+	--async \
+	--proto=proto_files/service.proto \
+	--call=service.CalculatorService/Calculate \
+	-D dev/tests/load/ghz-calc.json \
+	-c 10 -n 10000 \
+	--load-schedule=step --load-start=50 --load-end=150 --load-step=10 --load-step-duration=5s \
+	grpc.sacre-tech.local:9001
