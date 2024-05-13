@@ -13,7 +13,10 @@ pub mod hello_service {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = HelloServiceClient::connect("http://[::]:50051").await?;
+    let endpoint = "http://grpc.sacre-tech.local:9001";
+    // let endpoint = "http://[::]:50051";
+
+    let mut client = HelloServiceClient::connect(endpoint).await?;
 
     let request = tonic::Request::new(HelloRequest {
         name: "Sata".to_string(),
@@ -52,7 +55,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         resp_time_st.duration_since(req_time_st).unwrap()
     );
 
-    let mut client = CalculatorServiceClient::connect("http://[::]:50051").await?;
+    let mut client = CalculatorServiceClient::connect(endpoint).await?;
 
     let mut rng = rand::thread_rng();
 
