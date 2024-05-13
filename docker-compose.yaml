@@ -112,6 +112,22 @@ services:
       - "traefik.http.services.grcp_balancer.loadbalancer.server.scheme=h2c"
       - "traefik.http.services.grcp_balancer.loadbalancer.server.weight=1"
 
+  rust_server:
+    build:
+      context: .
+      dockerfile: dev/docker/rust.Dockerfile
+    ports:
+      - "50057:50051"
+    container_name: rust_server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rust_server.rule=Host(`grpc.sacre-tech.local`)"
+      - "traefik.http.routers.rust_server.entrypoints=grpc"
+      - "traefik.http.routers.rust_server.service=grcp_balancer"
+      - "traefik.http.services.grcp_balancer.loadbalancer.server.port=50051"
+      - "traefik.http.services.grcp_balancer.loadbalancer.server.scheme=h2c"
+      - "traefik.http.services.grcp_balancer.loadbalancer.server.weight=1"
+
   traefik:
     image: traefik:v3.0
     ports:

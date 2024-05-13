@@ -76,6 +76,10 @@
             <canvas id="byTimeRuby" width="600" height="400"></canvas>
             <h1 class="text-3xl font-bold mt-10">Ruby</h1>
           </div>
+          <div class="relative max-w-md content-center" style="height:400px; width:400px">
+            <canvas id="byTimeRust" width="600" height="400"></canvas>
+            <h1 class="text-3xl font-bold mt-10">Rust</h1>
+          </div>
         </div>
       </div>
     </div>
@@ -210,4 +214,5 @@
   renderByTimeAndLangChart('byTimeDart', 'dart', queryData);
   renderByTimeAndLangChart('byTimePython', 'python', queryData);
   renderByTimeAndLangChart('byTimeRuby', 'ruby', queryData);
+  renderByTimeAndLangChart('byTimeRust', 'rust', queryData);
 </script>
