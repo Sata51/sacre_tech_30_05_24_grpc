@@ -22,8 +22,6 @@ impl HelloService for MyHelloService {
         &self,
         request: Request<HelloRequest>,
     ) -> Result<Response<HelloResponse>, Status> {
-        println!("Got a request: {:?}", request);
-
         // Copy the request time to a temporary variable
         let req = request.into_inner();
 
@@ -49,8 +47,6 @@ impl CalculatorService for MyCalcService {
         &self,
         request: Request<CalculatorRequest>,
     ) -> Result<Response<CalculatorResponse>, Status> {
-        println!("Got a request: {:?}", request);
-
         // Copy the request time to a temporary variable
         let req = request.into_inner();
 

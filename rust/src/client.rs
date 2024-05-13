@@ -3,11 +3,9 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use hello_service::{
     calculator_service_client::CalculatorServiceClient, hello_service_client::HelloServiceClient,
-    CalculatorRequest, CalculatorResponse, ClientRequestInfo, ClientResponseInfo, HelloRequest,
-    HelloResponse,
+    CalculatorRequest, ClientRequestInfo, HelloRequest,
 };
 use prost_types::Timestamp;
-use tonic::client;
 
 pub mod hello_service {
     tonic::include_proto!("service");
@@ -15,7 +13,7 @@ pub mod hello_service {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = HelloServiceClient::connect("http://[::1]:50051").await?;
+    let mut client = HelloServiceClient::connect("http://[::]:50051").await?;
 
     let request = tonic::Request::new(HelloRequest {
         name: "Sata".to_string(),
@@ -54,7 +52,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         resp_time_st.duration_since(req_time_st).unwrap()
     );
 
-    let mut client = CalculatorServiceClient::connect("http://[::1]:50051").await?;
+    let mut client = CalculatorServiceClient::connect("http://[::]:50051").await?;
 
     let mut rng = rand::thread_rng();
 
