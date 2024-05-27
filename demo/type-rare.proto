@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message ScalarTypes {
+  uint32 count = 1; // Unsigned Integer
+  uint64 total = 2; // Unsigned Long
+  sint32 score = 3; // Signed Integer
+  sint64 price = 4; // Signed Long
+  fixed32 fixed32 = 5; // Fixed Integer (More efficient than int32 if values often exceed 2^28)
+  fixed64 fixed64 = 6; // Fixed Long (More efficient than int64 if values often exceed 2^56)
+  sfixed32 sfixed32 = 7; // Signed Fixed Integer (Always 4 bytes in size)
+  sfixed64 sfixed64 = 8; // Signed Fixed Long (Always 8 bytes in size)
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "gen/service";
+
+package demo;
+
+message Person {
+    string id = 1;
+    string name = 2;
+    optional string email = 3;
+}

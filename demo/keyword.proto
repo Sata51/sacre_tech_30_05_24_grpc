@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+enum KEYWORD_TYPE {
+  UNKNOWN = 0;
+  PERSON = 1;
+  PLACE = 2;
+}
+
+message Keywords {
+  repeated string names = 1;
+  optional string description = 2;
+  optional KEYWORD_TYPE type = 3;
+  oneof keyword_oneof {
+    string person = 4;
+    string place = 5;
+  }
+  map<string, string> metadata = 6;
+}

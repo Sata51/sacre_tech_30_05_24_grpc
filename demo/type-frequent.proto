@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message ScalarTypes {
+  string name = 1; // String (UTF-8, cannot be longer than 2^32 bytes)
+  int32 age = 2; // Integer
+  int64 timestamp = 3; // Long
+  float score = 12; // Float
+  double price = 13; // Double
+  bool is_valid = 14; // Boolean
+  bytes data = 15; // Bytes (Raw data, cannot be longer than 2^32 bytes)
+}
